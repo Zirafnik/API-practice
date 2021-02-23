@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Practice</title>
+</head>
+<body>
+    <img src="#" />
+
+    <input type="text" placeholder="Search for gif" value="cats">
+
+    <button>Reload</button>
+
+    <script>
+        const img= document.querySelector('img');
+        const input= document.querySelector('input');
+
+        let getImg= (search) => {
+            fetch('https://api.giphy.com/v1/gifs/translate?api_key=X7x45YNvjvs0oPX1IjMjWpEMNxjKORZn&s=' + search, {
+            mode: 'cors'
+        })
+            .then((response) => {
+               return (response.json());
+            })
+            .then((response) => {
+                img.src= response.data.images.original.url;
+            })
+            .catch((err) => {
+                console.error(err);
+                img.src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgZMQcf2G2xvLEiPcBsebw91AWmnntEZlZ6g&usqp=CAU';
+            })};
+
+        getImg(input.value);
+
+        const btn= document.querySelector('button');
+        btn.addEventListener('click', function() {
+            getImg(input.value);
+        })
+    </script>
+</body>
+</html>

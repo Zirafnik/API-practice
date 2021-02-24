@@ -14,6 +14,7 @@
         const img= document.querySelector('img');
         const input= document.querySelector('input');
 
+        /*
         let getImg= (search) => {
             fetch('https://api.giphy.com/v1/gifs/translate?api_key=X7x45YNvjvs0oPX1IjMjWpEMNxjKORZn&s=' + search, {
             mode: 'cors'
@@ -28,8 +29,25 @@
                 console.error(err);
                 img.src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgZMQcf2G2xvLEiPcBsebw91AWmnntEZlZ6g&usqp=CAU';
             })};
+        */
 
-        getImg(input.value);
+        let getImg= async (search) => {
+            try{
+                const response= await fetch('https://api.giphy.com/v1/gifs/translate?api_key=X7x45YNvjvs0oPX1IjMjWpEMNxjKORZn&s=' + search, {
+                mode: 'cors'
+                });
+
+                const catData= await response.json();
+                
+                img.src= catData.data.images.original.url;
+            }
+            catch(err) {
+                console.error(err);
+                img.src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgZMQcf2G2xvLEiPcBsebw91AWmnntEZlZ6g&usqp=CAU';
+            }
+        }
+
+        getImg(input.value)
 
         const btn= document.querySelector('button');
         btn.addEventListener('click', function() {
